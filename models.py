@@ -9,7 +9,7 @@ from sklearn.ensemble import RandomForestClassifier
 from sklearn.cross_validation import KFold
 import pandas as pd
 import numpy as np
-
+import pprint as pp
 
 def run_kfolds(clf):
     kf = KFold(891, n_folds=10)
@@ -63,6 +63,6 @@ for clf in clf_list:
     score = accuracy_score(y_test_all, y_pred)
     accuracy[clf] = score
 
-print(accuracy)
+pp.pprint(accuracy)
 # print('accuracy score: ', accuracy_score(y_test_all, y_pred))
 
