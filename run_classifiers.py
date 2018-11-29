@@ -90,15 +90,12 @@ def univariate_feature_selection():
 
 dummy = pd.get_dummies(df_train['service'])
 print(dummy.head())
-'''
+# '''
 rf = trainDecisionTree()
 y_predict = rf.predict(X_test)
-print accuracy_score(y_test,y_predict)
-'''
+print(accuracy_score(y_test,y_predict))
+# '''
 
 # trainExtraTreesClassifier()
 univariate_feature_selection()
-
-
-
-
+# print(accuracy_score(y_test, y_predict))

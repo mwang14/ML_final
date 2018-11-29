@@ -4,7 +4,8 @@ import json
 import pandas as pd
 from sklearn.tree import DecisionTreeClassifier
 import numpy as np
-from sklearn.model_selection import train_test_split
+from sklearn.cross_validation import train_test_split
+# from sklearn.model_selection import train_test_split
 from sklearn.metrics import accuracy_score
 from sklearn.ensemble import RandomForestClassifier
 import matplotlib.pyplot as plt
