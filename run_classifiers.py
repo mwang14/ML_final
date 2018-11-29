@@ -3,12 +3,16 @@ import csv
 import json
 import pandas as pd
 from sklearn.tree import DecisionTreeClassifier
-from sklearn.model_selection import train_test_split
+# from sklearn.model_selection import train_test_split
 from sklearn.metrics import accuracy_score
 from sklearn.ensemble import RandomForestClassifier
+from sklearn.ensemble import ExtraTreesClassifier
+from sklearn.feature_selection import SelectFromModel
+
 
 def getFile(num):
   return "unsw/UNSW-NB15_{filenum}.csv".format(filenum=num)
+
 
 def categories_to_numbers(values):
   values.sort()
@@ -62,8 +66,19 @@ def trainRandomForest():
   rf.fit(X,y)
   return rf
 
+
+def trainExtraTreesClassifier():
+    print('pre shape: ', X.shape)
+    clf = ExtraTreesClassifier(n_estimators=50)
+    clf = clf.fit(X, y)
+    # print(clf.feature_importances_)
+    model = SelectFromModel(clf, prefit=True)
+    X_new = model.transform(X)
+    print('post shape: ', X_new.shape)
+    print(X_new.shape)
+
 dummy = pd.get_dummies(df_train['service'])
-print dummy.head()
+print(dummy.head())
 '''
 rf = trainDecisionTree()
 y_predict = rf.predict(X_test)
@@ -71,7 +86,7 @@ print accuracy_score(y_test,y_predict)
 '''
 
 
-
+trainExtraTreesClassifier()
 
 
 
