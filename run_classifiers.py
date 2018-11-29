@@ -7,7 +7,7 @@ from sklearn.tree import DecisionTreeClassifier
 from sklearn.metrics import accuracy_score
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.ensemble import ExtraTreesClassifier
-from sklearn.feature_selection import SelectFromModel
+from sklearn.feature_selection import SelectFromModel, SelectKBest, chi2
 
 
 def getFile(num):
@@ -77,6 +77,17 @@ def trainExtraTreesClassifier():
     print('post shape: ', X_new.shape)
     print(X_new.shape)
 
+
+def univariate_feature_selection():
+    print(X.shape)
+    selector = SelectKBest(chi2, k=5)
+    selector.fit(X, y)
+    print('scores: ', selector.scores_)
+    print('pvalues: ', selector.pvalues_)
+    print('selected index: ', selector.get_support(True))
+    print('after transform: ', selector.transform(X))
+
+
 dummy = pd.get_dummies(df_train['service'])
 print(dummy.head())
 '''
@@ -85,9 +96,8 @@ y_predict = rf.predict(X_test)
 print accuracy_score(y_test,y_predict)
 '''
 
-
-trainExtraTreesClassifier()
-
+# trainExtraTreesClassifier()
+univariate_feature_selection()
 
 
 
