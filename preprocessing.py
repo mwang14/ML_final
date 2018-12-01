@@ -25,14 +25,16 @@ def gen_X_and_y(data_set):
     # categorical data in training set
     columns = ['proto', 'service', 'state', 'attack_cat']
 
+    '''
     for col in columns:
         cleaned_train_data = map_categorical_to_numerical(data_set, col)
-
-    X_train = cleaned_train_data.drop(['attack_cat', 'label'],  axis=1)
-    # scalar.fit(X_train)
-    # X_train = scalar.transform(X_train)
+    
+    X_train = cleaned_train_data.drop(['attack_cat','label'], axis=1)
     y_train = cleaned_train_data['attack_cat']
-    # y_train = scalar.transform(y_train)
-    X_train = preprocessing.scale(X_train)
-    return X_train, y_train
+    y2_train = cleaned_train_data['label']
+    '''
+    X_train = data_set.drop(['attack_cat','label'], axis=1)
+    y_train = data_set['attack_cat']
+    y2_train = data_set['label']
+    return X_train, y_train, y2_train
     # print(cleaned_train_data.head())
