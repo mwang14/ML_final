@@ -66,8 +66,9 @@ for clf in clf_list:
     y_pred = clf.predict(X_test_all)
     score = accuracy_score(y_test_all, y_pred)
     accuracy[clf] = score
+    print(confusion_matrix(y_test_all, y_pred))
 
 pp.pprint(accuracy)
 # print('accuracy score: ', accuracy_score(y_test_all, y_pred))
 
-print(confusion_matrix(y_test_all, y_pred))
+
