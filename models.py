@@ -1,3 +1,5 @@
+#!/usr/bin/env python3
+
 import preprocessing
 from sklearn.cross_validation import train_test_split
 from sklearn.metrics import make_scorer, accuracy_score, confusion_matrix
@@ -12,7 +14,9 @@ from sklearn.svm import SVC
 import pandas as pd
 import numpy as np
 import pprint as pp
-
+import conf_mat
+# import seaborn
+import matplotlib.pyplot as plt
 
 def run_kfolds(clf):
     kf = KFold(891, n_folds=10)
@@ -36,6 +40,7 @@ df_test = pd.read_csv('UNSW_NB15_testing-set.csv')
 X_all, y_all = preprocessing.gen_X_and_y(df_train)
 X_test_all, y_test_all = preprocessing.gen_X_and_y(df_test)
 
+
 num_test = .2
 
 X_train, X_test, y_train, y_test = train_test_split(X_all, y_all, test_size=num_test)
@@ -44,7 +49,7 @@ scores = []
 
 clf_list = [LinearSVC(), DecisionTreeClassifier(), GaussianNB(), RandomForestClassifier()]
 
-# clf_list = [DecisionTreeClassifier()]
+clf_list = [RandomForestClassifier()]
 print('Classifiers list: ', clf_list)
 
 parameters = {'n_estimators': [4, 6, 9],
@@ -61,12 +66,18 @@ parameters = {'n_estimators': [4, 6, 9],
 # grid_obj = grid_obj.fit(X_train, y_train)
 # clf = grid_obj.best_estimator_
 accuracy = {}
+classes = ['Normal', 'Backdoor', 'Analysis', 'Fuzzers', 'Shellcode',
+           'Reconnaissance', 'Exploits', 'DoS', 'Worms', 'Generic']
 for clf in clf_list:
     clf.fit(X_train, y_train)
     y_pred = clf.predict(X_test_all)
     score = accuracy_score(y_test_all, y_pred)
     accuracy[clf] = score
-    print(confusion_matrix(y_test_all, y_pred))
+
+    conf = confusion_matrix(y_test_all, y_pred)
+    print(conf)
+    conf_mat.plot_cm(conf, classes, normalized=True)
+
 
 pp.pprint(accuracy)
 # print('accuracy score: ', accuracy_score(y_test_all, y_pred))
