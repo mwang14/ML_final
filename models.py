@@ -1,4 +1,6 @@
-import preprocessing
+import preprocessing_custom
+from sklearn import preprocessing
+from sklearn.neural_network import MLPClassifier
 from sklearn.cross_validation import train_test_split
 from sklearn.metrics import make_scorer, accuracy_score
 from sklearn.grid_search import GridSearchCV
@@ -32,16 +34,18 @@ def run_kfolds(clf):
 df_train = pd.read_csv('train_cleaned.csv')
 df_test = pd.read_csv('test_cleaned.csv')
 
-X_all, y_all, y2_all = preprocessing.gen_X_and_y(df_train)
-X_test_all, y_test_all,y2_test_all = preprocessing.gen_X_and_y(df_test)
+X_all, y_all, y2_all = preprocessing_custom.gen_X_and_y(df_train)
+X_test_all, y_test_all,y2_test_all = preprocessing_custom.gen_X_and_y(df_test)
 
+X_all = pd.DataFrame(preprocessing.scale(X_all))
+X_test_all = pd.DataFrame(preprocessing.scale(X_test_all))
 num_test = .2
 
-X_train, X_test, y_train, y_test = train_test_split(X_all, y2_all, test_size=num_test)
+X_train, X_test, y_train, y_test = train_test_split(X_all, y_all, test_size=num_test)
 print('After splitting training and testing sets')
 scores = []
 #, DecisionTreeClassifier(), GaussianNB(),RandomForestClassifier(),LinearSVC()
-clf_list = [LinearSVC(), DecisionTreeClassifier(), GaussianNB(), RandomForestClassifier()]
+clf_list = [RandomForestClassifier(n_estimators=200,max_depth=5,random_state=0)]#[LinearSVC(), DecisionTreeClassifier(), GaussianNB(), RandomForestClassifier()]
 
 # parameters = {'n_estimators': [4, 6, 9],
 #               'max_features': ['log2', 'sqrt', 'auto'],
@@ -62,7 +66,7 @@ for clf in clf_list:
     clf.fit(X_train, y_train)
 # predictions = clf.predict(X_test)
     y_pred = clf.predict(X_test_all)
-    score = accuracy_score(y2_test_all, y_pred)
+    score = accuracy_score(y_test_all, y_pred)
     accuracy[clf] = score
 
 pp.pprint(accuracy)
