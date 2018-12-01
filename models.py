@@ -45,7 +45,7 @@ X_train, X_test, y_train, y_test = train_test_split(X_all, y_all, test_size=num_
 print('After splitting training and testing sets')
 scores = []
 #, DecisionTreeClassifier(), GaussianNB(),RandomForestClassifier(),LinearSVC()
-clf_list = [RandomForestClassifier(n_estimators=200,max_depth=5,random_state=0)]#[LinearSVC(), DecisionTreeClassifier(), GaussianNB(), RandomForestClassifier()]
+clf_list = [RandomForestClassifier(n_estimators=200,max_depth=10,random_state=0),LinearSVC(), DecisionTreeClassifier(), GaussianNB(), MLPClassifier(hidden_layer_sizes=(10,10,10))]
 
 # parameters = {'n_estimators': [4, 6, 9],
 #               'max_features': ['log2', 'sqrt', 'auto'],
@@ -63,7 +63,7 @@ acc_scorer = make_scorer(accuracy_score)
 # clf = grid_obj.best_estimator_
 accuracy = {}
 for clf in clf_list:
-    clf.fit(X_train, y_train)
+    clf.fit(X_all, y_all)
 # predictions = clf.predict(X_test)
     y_pred = clf.predict(X_test_all)
     score = accuracy_score(y_test_all, y_pred)

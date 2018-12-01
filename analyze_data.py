@@ -162,16 +162,16 @@ df_train = df_train.drop('id',axis=1)
 df_test = df_test.drop('id',axis=1)
 df_train.to_csv('train_cleaned.csv')
 df_test.to_csv('test_cleaned.csv')
-y = df_train['attack_cat']
-y2 = df_train['label']
-X = df_train.drop(['attack_cat','label'],axis=1)
-
-X_test = df_test.drop(['attack_cat','label'],axis=1)
-
-y_test = df_test['attack_cat']
-y_test2 = df_test['label']
-
-X = pd.DataFrame(preprocessing.scale(X))
-X_test = pd.DataFrame(preprocessing.scale(X_test))
-
+#y = df_train['attack_cat']
+#y2 = df_train['label']
+#X = df_train.drop(['attack_cat','label'],axis=1)
+#
+#X_test = df_test.drop(['attack_cat','label'],axis=1)
+#
+#y_test = df_test['attack_cat']
+#y_test2 = df_test['label']
+#
+#X = pd.DataFrame(preprocessing.scale(X))
+#X_test = pd.DataFrame(preprocessing.scale(X_test))
+#
 
