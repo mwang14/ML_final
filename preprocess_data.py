@@ -13,6 +13,7 @@ from sklearn import preprocessing
 
 def map_categorical_to_numerical(data_matrix, column):
     unique = data_matrix[column].unique()
+    # print(unique)
     d = dict([y, x+1] for x, y in enumerate(sorted(set(unique))))
     new_col = []
     for val in data_matrix[column]:
@@ -25,14 +26,14 @@ def gen_X_and_y(data_set):
     # categorical data in training set
     columns = ['proto', 'service', 'state', 'attack_cat']
 
-    '''
+    # '''
     for col in columns:
         cleaned_train_data = map_categorical_to_numerical(data_set, col)
-    
+
     X_train = cleaned_train_data.drop(['attack_cat','label'], axis=1)
     y_train = cleaned_train_data['attack_cat']
     y2_train = cleaned_train_data['label']
-    '''
+    # '''
     X_train = data_set.drop(['attack_cat','label'], axis=1)
     y_train = data_set['attack_cat']
     y2_train = data_set['label']
