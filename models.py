@@ -12,14 +12,12 @@ from sklearn.naive_bayes import GaussianNB
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.cross_validation import KFold
 from sklearn.svm import SVC
-# from sklearn.neural_network import
 import pandas as pd
 import numpy as np
 import pprint as pp
 import conf_mat
 from sklearn.metrics import confusion_matrix
 import preprocess_data
-# import seaborn
 import matplotlib.pyplot as plt
 
 def run_kfolds(clf):
@@ -92,9 +90,10 @@ acc_scorer = make_scorer(accuracy_score)
 # clf = grid_obj.best_estimator_
 accuracy = {}
 
-classes = ['Normal', 'Backdoor', 'Analysis', 'Fuzzers', 'Shellcode',
-           'Reconnaissance', 'Exploits', 'DoS', 'Worms', 'Generic']
-
+# classes = ['Normal', 'Backdoor', 'Analysis', 'Fuzzers', 'Shellcode',
+#            'Reconnaissance', 'Exploits', 'DoS', 'Worms', 'Generic']
+classes = ['Reconnaissance', 'Analysis', 'Fuzzers', 'Shellcode',
+           'Exploits', 'Generic', 'Normal', 'Backdoor', 'Worms', 'DoS']
 for clf in clf_list:
     clf.fit(X_all, y_all)
 # predictions = clf.predict(X_test)
