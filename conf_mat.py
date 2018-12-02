@@ -4,7 +4,7 @@ import numpy as np
 import itertools
 
 
-def plot_cm(conf_matrix, class_names, normalized=False):
+def plot_cm(conf_matrix, class_names, title, normalized=False):
     if normalized == True:
         conf_matrix = conf_matrix.astype('float') / conf_matrix.sum(axis=1)[:, np.newaxis]
         print('Normalized')
@@ -13,7 +13,7 @@ def plot_cm(conf_matrix, class_names, normalized=False):
 
     plt.clf()
     plt.imshow(conf_matrix, interpolation='nearest', cmap=plt.cm.Wistia)
-    plt.title('Confusion Matrix')
+    plt.title(title)
     plt.xlabel('Predicted Label')
     plt.ylabel('True Label')
     tick_marks = np.arange(len(class_names))

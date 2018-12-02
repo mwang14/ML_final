@@ -34,11 +34,20 @@ def run_kfolds(clf):
     mean_outcome = np.mean(outcomes)
     print('Mean accuracy: ', mean_outcome)
 
-df_train = pd.read_csv('UNSW_NB15_training-set.csv')
-df_test = pd.read_csv('UNSW_NB15_testing-set.csv')
+    return clf
 
-X_all, y_all = preprocessing.gen_X_and_y(df_train)
-X_test_all, y_test_all = preprocessing.gen_X_and_y(df_test)
+
+# df_train = pd.read_csv('UNSW_NB15_training-set.csv')
+# df_test = pd.read_csv('UNSW_NB15_testing-set.csv')
+
+df_train = pd.read_csv('train_cleaned.csv')
+df_test = pd.read_csv('test_cleaned.csv')
+
+# X_all, y_all = preprocessing.gen_X_and_y(df_train)
+# X_test_all, y_test_all = preprocessing.gen_X_and_y(df_test)
+
+X_all, y_all = preprocessing.passthrough(df_train)
+X_test_all, y_test_all = preprocessing.passthrough(df_test)
 
 
 num_test = .2
@@ -49,7 +58,7 @@ scores = []
 
 clf_list = [LinearSVC(), DecisionTreeClassifier(), GaussianNB(), RandomForestClassifier()]
 
-clf_list = [RandomForestClassifier()]
+# clf_list = [RandomForestClassifier()]
 print('Classifiers list: ', clf_list)
 
 parameters = {'n_estimators': [4, 6, 9],
@@ -76,7 +85,7 @@ for clf in clf_list:
 
     conf = confusion_matrix(y_test_all, y_pred)
     print(conf)
-    conf_mat.plot_cm(conf, classes, normalized=True)
+    conf_mat.plot_cm(conf, classes, normalized=True, title=str(clf).split('(')[0])
 
 
 pp.pprint(accuracy)

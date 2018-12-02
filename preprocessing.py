@@ -36,3 +36,9 @@ def gen_X_and_y(data_set):
     X_train = preprocessing.scale(X_train)
     return X_train, y_train
     # print(cleaned_train_data.head())
+
+
+def passthrough(data_set):
+    X_train = data_set.drop(['id', 'attack_cat', 'label'], axis=1)
+    y_train = data_set['attack_cat']
+    return X_train, y_train
